@@ -1,1 +1,1 @@
-Servidor de Socker para el Proyecto
+Servidor de Socket para el Proyecto
