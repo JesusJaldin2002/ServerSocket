@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
 
-const port = process.env.PORT ?? 808; //Cambiar esto si voy a probar en localhost
+const port = process.env.PORT ?? 808; // Cambiar esto si voy a probar en localhost
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
@@ -14,9 +14,12 @@ const io = new Server(server, {
   },
 });
 
-
 io.on("connection", (socket) => {
   console.log("Un cliente se ha conectado");
+
+  socket.on("message", (data) => {
+    io.emit("message", data); // Emitir el mensaje a todos los clientes conectados
+  });
 
   socket.on("disconnect", () => {
     console.log("Un cliente se ha desconectado");
