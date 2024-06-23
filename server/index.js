@@ -16,7 +16,7 @@ const credentials = {
   ca: ca
 };
 
-const port = process.env.PORT ?? 8080;
+const port = process.env.PORT ?? 8080; //Poner cualquier puerto
 const app = express();
 const server = https.createServer(credentials, app);
 const io = new Server(server, {
@@ -24,6 +24,10 @@ const io = new Server(server, {
     origin: "https://proyectosw1.xyz", // Cambiar por tu dominio de Laravel
     methods: ["GET", "POST"],
   },
+  // cors: {
+  //   origin: "http://127.0.0.1:8000", // Cambiar por la ip de la nube o del localhost
+  //   methods: ["GET", "POST"],
+  // },
 });
 
 io.on("connection", (socket) => {
@@ -50,6 +54,10 @@ app.use(
     origin: "https://proyectosw1.xyz", // Cambiar por tu dominio de Laravel
     methods: ["GET", "POST"],
   })
+  // cors: {
+  //   origin: "http://127.0.0.1:8000", // Cambiar por la ip de la nube o del localhost
+  //   methods: ["GET", "POST"],
+  // },
 );
 
 app.get("/", (req, res) => {
