@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import { createServer } from "node:http";
 import cors from "cors";
 
-const port = process.env.PORT ?? 80; // Cambiar esto si voy a probar en localhost
+const port = process.env.PORT ?? 8080; // Cambiar esto si voy a probar en localhost
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
