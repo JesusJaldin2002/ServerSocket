@@ -1,15 +1,27 @@
 import express from "express";
+import fs from "fs";
+import https from "https";
 import logger from "morgan";
 import { Server } from "socket.io";
-import { createServer } from "node:http";
 import cors from "cors";
 
-const port = process.env.PORT ?? 8080; // Cambiar esto si voy a probar en localhost
+// Certificados SSL
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/chain.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};
+
+const port = process.env.PORT ?? 8080;
 const app = express();
-const server = createServer(app);
+const server = https.createServer(credentials, app);
 const io = new Server(server, {
   cors: {
-    origin: "http://18.208.90.142", // Cambiar por la ip de la nube o del localhost
+    origin: "https://proyectosw1.xyz", // Cambiar por tu dominio de Laravel
     methods: ["GET", "POST"],
   },
 });
@@ -35,7 +47,7 @@ app.use(logger("dev"));
 // Habilitar CORS para todas las solicitudes
 app.use(
   cors({
-    origin: "http://18.208.90.142", // Cambiar por la ip de la nube o del localhost
+    origin: "https://proyectosw1.xyz", // Cambiar por tu dominio de Laravel
     methods: ["GET", "POST"],
   })
 );
@@ -45,5 +57,5 @@ app.get("/", (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on https://servidor-socket.duckdns.org:${port}`);
 });
