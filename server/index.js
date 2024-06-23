@@ -6,9 +6,9 @@ import { Server } from "socket.io";
 import cors from "cors";
 
 // Certificados SSL
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/servidor-socket.duckdns.org/chain.pem', 'utf8');
+const privateKey = fs.readFileSync('/home/ubuntu/ServerSocket/certs/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/home/ubuntu/ServerSocket/certs/fullchain.pem', 'utf8');
+const ca = fs.readFileSync('/home/ubuntu/ServerSocket/certs/chain.pem', 'utf8');
 
 const credentials = {
   key: privateKey,
